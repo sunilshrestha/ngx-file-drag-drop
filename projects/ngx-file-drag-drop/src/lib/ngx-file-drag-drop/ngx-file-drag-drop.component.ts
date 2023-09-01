@@ -1,16 +1,23 @@
-import { Component, forwardRef, HostBinding, HostListener, ViewChild, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, forwardRef, HostBinding, HostListener, ViewChild, Input, ElementRef, Output, EventEmitter, ContentChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { BytePipe } from '../byte.pipe';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+import { NgIf, NgFor, NgTemplateOutlet } from '@angular/common';
+import { EmptyPlaceholderDirective } from '../empty-placeholder.directive';
 
 @Component({
-  selector: 'ngx-file-drag-drop',
-  templateUrl: './ngx-file-drag-drop.component.html',
-  styleUrls: ['./ngx-file-drag-drop.component.css'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgxFileDragDropComponent),
-    multi: true
-  }]
+    selector: 'ngx-file-drag-drop',
+    templateUrl: './ngx-file-drag-drop.component.html',
+    styleUrls: ['./ngx-file-drag-drop.component.css'],
+    providers: [{
+            provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NgxFileDragDropComponent),
+            multi: true
+        }],
+    standalone: true,
+    imports: [NgIf, MatChipsModule, NgFor, MatTooltipModule, MatIconModule, BytePipe, NgTemplateOutlet]
 })
 export class NgxFileDragDropComponent implements ControlValueAccessor {
 
@@ -79,6 +86,8 @@ export class NgxFileDragDropComponent implements ControlValueAccessor {
   @ViewChild('fileInputEl')
   private fileInputEl: ElementRef;
 
+  @HostBinding('class.empty-placeholder')
+  @ContentChild(EmptyPlaceholderDirective) customEmptyPlaceholder!: EmptyPlaceholderDirective;
 
   // does no validation, just sets the hidden file input
   @Input() accept = '*';
