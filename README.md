@@ -10,15 +10,14 @@ npm i ngx-file-drag-drop
 
 ## API reference
 
-### NgxFileDragDropModule
+### [Standalone API](https://angular.io/guide/standalone-components)
 
 ```ts
-import { NgxFileDragDropModule } from 'ngx-file-drag-drop';
+import { NgxFileDragDropComponent } from 'ngx-file-drag-drop';
 
-@NgModule({
+@Component({
   imports: [
-    // the module for this lib
-    NgxFileDragDropModule
+    NgxFileDragDropComponent
   ]
 })
 ```
@@ -45,6 +44,39 @@ implements: [ControlValueAccessor](https://angular.io/api/forms/ControlValueAcce
 | clear(): `() => void`                                    | Removes all files from the input                                         |
 | files: `File[]`                                          | Getter for form value                                                    |
 | isEmpty: `boolean`                                       | Whether the input is empty (no files) or not                             |
+
+### Custom Placeholder
+
+selector: `emptyPlaceholder`
+
+Usage:
+
+```ts
+import { NgxFileDragDropComponent, EmptyPlaceholderDirective } from 'ngx-file-drag-drop';
+
+@Component({
+  imports: [
+    NgxFileDragDropComponent, EmptyPlaceholderDirective
+  ]
+})
+```
+
+```html
+<ngx-file-drag-drop>
+  <ng-template emptyPlaceholder>
+    <div style="display:flex; flex-direction:column;align-items: center; row-gap: 4px;">
+      <span style="font-weight: 500;">Upload Files</span>
+       <span>Drop files or click to select</span>
+    </div>
+  </ng-template>
+</ngx-file-drag-drop>
+```
+
+```css
+  .empty-placeholder {
+    
+  }
+```
 
 ### BytePipe
 
